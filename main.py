@@ -40,9 +40,30 @@ def OptimalBST(dataList, frequencyList):
         return root
 
 
+def testTime(dataList, frequencyList):
+    start = time.perf_counter()
+
+    OptimalBST(dataList, frequencyList)
+
+    end = time.perf_counter()
+
+    print("Time: ", end - start)
+
+    return end - start
+
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+    # Prueba de tiempo
+    dataTest = {}
 
-    OptimalBST([1, 2, 3, 4, 5], [1, 2, 3, 4, 5])
+    df2 = pd.read_csv('data2.csv')
+
+    for i in range(len(df2)):
+        tests = df2['test Array'][i].replace('[', '').replace(']', '').split(',')
+        testsFrequency = df2['test Frequency'][i].replace('[', '').replace(']', '').split(',')
+        testsFrequency = [float(i) for i in testsFrequency]
+        tests = [int(i) for i in tests]
+        dataTest[i] = testTime(tests, testsFrequency)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
