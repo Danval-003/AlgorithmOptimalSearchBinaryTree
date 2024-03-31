@@ -66,4 +66,28 @@ if __name__ == '__main__':
         tests = [int(i) for i in tests]
         dataTest[i] = testTime(tests, testsFrequency)
 
+    # Crear un DataFrame con los datos
+    # df = pd.read_csv('data.csv')
+    df = pd.DataFrame(list(dataTest.items()), columns=['N', 'Time'])
+
+    # df.to_csv('data.csv', index=False)
+
+    # Graficar los datos
+    plt.plot(df['N'], df['Time'])
+    plt.xlabel('N')
+    plt.ylabel('Time')
+    plt.title('Time vs N')
+    # Hacer una regresión lineal
+    plt.plot(df['N'], df['Time'], 'o')
+    m, b = np.polyfit(df['N'], df['Time'], 1)
+    regression_line = m * df['N'] + b
+    plt.plot(df['N'], regression_line)
+    # calcular el error cuadrático medio
+    r_squared = r2_score(df['Time'], regression_line)
+    print('R^2 regresión lineal:', r_squared)
+    mse = mean_squared_error(df['Time'], regression_line)
+    print("Error cuadrático medio:", mse)
+
+    plt.show()
+
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
