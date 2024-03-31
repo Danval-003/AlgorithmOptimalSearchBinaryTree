@@ -88,6 +88,20 @@ if __name__ == '__main__':
     mse = mean_squared_error(df['Time'], regression_line)
     print("Error cuadrático medio:", mse)
 
+    plt.text(0.5, 0.9, f'$ lineal R^2 = {r_squared:.2f}$', ha='center', va='center', transform=plt.gca().transAxes, fontsize=12)
+    # Hacer una regresión cuadrática
+    plt.plot(df['N'], df['Time'], 'o')
+    m, b, c = np.polyfit(df['N'], df['Time'], 2)
+    cua_reg = m * df['N'] ** 2 + b * df['N'] + c
+    plt.plot(df['N'], cua_reg)
+    # calcular el error cuadrático medio de la regresión cuadrática
+    r_squared = r2_score(df['Time'], cua_reg)
+    print('R^2 regresión lineal:', r_squared)
+    mse = mean_squared_error(df['Time'], cua_reg)
+    print("Error cuadrático medio:", mse)
+
+    plt.text(0.5, 0.7, f'$Quadratic R^2 = {r_squared:.2f}$', ha='center', va='center', transform=plt.gca().transAxes, fontsize=12)
+
     plt.show()
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
